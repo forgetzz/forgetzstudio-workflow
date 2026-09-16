@@ -12,7 +12,7 @@ export default function Page() {
             )}
         >
             <SignIn
-                forceRedirectUrl="/"
+                forceRedirectUrl="/home"
                 signUpUrl="/signup"
             />
         </div>

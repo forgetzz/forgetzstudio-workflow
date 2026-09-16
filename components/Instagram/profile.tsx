@@ -208,8 +208,8 @@ export default function Profile() {
         media: Array.isArray(result.media)
           ? result.media
           : Array.isArray(result.posts)
-          ? result.posts
-          : [],
+            ? result.posts
+            : [],
         paging: result.paging,
       };
 
@@ -327,7 +327,7 @@ export default function Profile() {
                   className="neu-inset h-24 w-24 rounded-full object-cover p-1 sm:h-28 sm:w-28 md:h-36 md:w-36"
                 />
               ) : (
-                <div className="neu-inset flex h-24 w-24 items-center justify-center rounded-full text-3xl font-bold text-gray-600 dark:text-gray-300 sm:h-28 sm:w-28 sm:text-4xl md:h-36 md:w-36">
+                <div className="neu-inset flex h-24 w-24 items-center justify-center rounded-full text-3xl font-bold sm:h-28 sm:w-28 sm:text-4xl md:h-36 md:w-36">
                   {profile.username?.charAt(0).toUpperCase() || "?"}
                 </div>
               )}
@@ -337,11 +337,11 @@ export default function Profile() {
             <div className="min-w-0 flex-1 w-full text-center md:text-left space-y-4">
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h1 className="truncate text-xl font-bold text-gray-800 dark:text-gray-100 sm:text-2xl">
+                  <h1 className="truncate text-xl font-bold sm:text-2xl">
                     @{profile.username || "-"}
                   </h1>
                   {profile.name && (
-                    <p className="mt-0.5 truncate text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <p className="mt-0.5 truncate text-xs sm:text-sm font-medium ">
                       {profile.name}
                     </p>
                   )}
@@ -349,7 +349,7 @@ export default function Profile() {
 
                 <button
                   type="button"
-                  className="neu-button w-full sm:w-auto px-5 py-2 text-xs font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-200 self-center md:self-auto"
+                  className="neu-button w-full sm:w-auto px-5 py-2 text-xs font-semibold uppercase tracking-widerself-center md:self-auto"
                 >
                   Edit Profil
                 </button>
@@ -358,28 +358,28 @@ export default function Profile() {
               {/* STATS */}
               <div className="grid grid-cols-3 gap-2 py-2 max-w-md mx-auto md:mx-0">
                 <div className="neu-inset p-2.5 rounded-xl text-center">
-                  <p className="text-sm sm:text-base font-extrabold text-gray-800 dark:text-gray-100">
+                  <p className="text-sm sm:text-base font-extrabold ">
                     {profile.media_count ?? media.length}
                   </p>
-                  <p className="text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <p className="text-[10px] sm:text-xs font-medium  uppercase tracking-wider">
                     Postingan
                   </p>
                 </div>
 
                 <div className="neu-inset p-2.5 rounded-xl text-center">
-                  <p className="text-sm sm:text-base font-extrabold text-gray-800 dark:text-gray-100">
+                  <p className="text-sm sm:text-base font-extrabold ">
                     {profile.followers_count ?? 0}
                   </p>
-                  <p className="text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <p className="text-[10px] sm:text-xs font-medium  uppercase tracking-wider">
                     Pengikut
                   </p>
                 </div>
 
                 <div className="neu-inset p-2.5 rounded-xl text-center">
-                  <p className="text-sm sm:text-base font-extrabold text-gray-800 dark:text-gray-100">
+                  <p className="text-sm sm:text-base font-extrabold">
                     {profile.follows_count ?? 0}
                   </p>
-                  <p className="text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <p className="text-[10px] sm:text-xs font-medium  uppercase tracking-wider">
                     Mengikuti
                   </p>
                 </div>
@@ -402,10 +402,10 @@ export default function Profile() {
         <section className="neu p-4 sm:p-6 rounded-2xl space-y-4">
           <div className="flex items-center justify-between border-b border-gray-200/40 pb-3 dark:border-gray-700/40">
             <div>
-              <h2 className="text-sm sm:text-base font-bold text-gray-800 dark:text-gray-100">
+              <h2 className="text-sm sm:text-base font-bold ">
                 Postingan Media
               </h2>
-              <p className="text-[11px] text-gray-500 dark:text-gray-400">
+              <p className="text-[11px] ">
                 Konten terhubung dari Instagram
               </p>
             </div>

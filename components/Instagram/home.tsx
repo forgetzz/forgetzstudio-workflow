@@ -198,7 +198,7 @@ export default function Home() {
                     <div>
                         <label
                             htmlFor="videoUrl"
-                            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            className="mb-2 block text-sm font-medium "
                         >
                             Video URL
                         </label>
@@ -211,13 +211,9 @@ export default function Home() {
                             placeholder="https://example.com/video.mp4"
                             className="
             w-full rounded-xl border border-gray-300
-            bg-white px-4 py-3 text-sm text-gray-900
+         px-4 py-3 text-sm 
             outline-none transition
-            focus:border-pink-500
-            focus:ring-2 focus:ring-pink-500/20
-            dark:border-gray-700
-            dark:bg-gray-950
-            dark:text-white
+       neu-inset
           "
                         />
                     </div>
@@ -226,7 +222,7 @@ export default function Home() {
                     <div>
                         <label
                             htmlFor="caption"
-                            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            className="mb-2 block text-sm font-medium "
                         >
                             Caption
                         </label>
@@ -238,14 +234,13 @@ export default function Home() {
                             placeholder="Tulis caption Instagram..."
                             rows={5}
                             className="
+                            neu-inset
             w-full resize-none rounded-xl border border-gray-300
-            bg-white px-4 py-3 text-sm text-gray-900
+    px-4 py-3 text-sm text-gray-900
             outline-none transition
-            focus:border-pink-500
-            focus:ring-2 focus:ring-pink-500/20
-            dark:border-gray-700
-            dark:bg-gray-950
-            dark:text-white
+   
+  
+        
           "
                         />
                     </div>
@@ -254,7 +249,7 @@ export default function Home() {
                     <div>
                         <label
                             htmlFor="audioName"
-                            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            className="mb-2 block text-sm font-md"
                         >
                             Audio Name
                         </label>
@@ -269,12 +264,7 @@ export default function Home() {
             w-full rounded-xl border border-gray-300
             bg-white px-4 py-3 text-sm text-gray-900
             outline-none transition
-            focus:border-pink-500
-            focus:ring-2 focus:ring-pink-500/20
-            dark:border-gray-700
-            dark:bg-gray-950
-            dark:text-white
-          "
+           neu-inset"
                         />
                     </div>
 
@@ -282,7 +272,7 @@ export default function Home() {
                     <div>
                         <label
                             htmlFor="scheduleDate"
-                            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            className="mb-2 block text-sm font-medium"
                         >
                             Schedule Date
                         </label>
@@ -294,13 +284,11 @@ export default function Home() {
                             onChange={(event) => setScheduleDate(event.target.value)}
                             className="
             w-full rounded-xl border border-gray-300
-            bg-white px-4 py-3 text-sm text-gray-900
+                 px-4 py-3 text-sm 
             outline-none transition
-            focus:border-pink-500
-            focus:ring-2 focus:ring-pink-500/20
-            dark:border-gray-700
-            dark:bg-gray-950
-            dark:text-white
+            neu-inset
+   
+           
           "
                         />
                     </div>
@@ -312,9 +300,9 @@ export default function Home() {
                         disabled={loading}
                         className="
           w-full rounded-xl neu-button
-          px-5 py-3 text-sm font-semibold text-white
+          px-5 py-3 text-sm font-semibold 
           transition
-          hover:bg-green-700
+          hover:bg-gray-300
           disabled:cursor-not-allowed
           disabled:opacity-50
           sm:w-auto
@@ -331,11 +319,11 @@ export default function Home() {
                 {/* Section Header */}
                 <div className="flex flex-col gap-4 border-b border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6 dark:border-gray-800">
                     <div>
-                        <h2 className="text-lg font-semibold text-gray-900 sm:text-xl dark:text-white">
+                        <h2 className="text-lg font-semibold ">
                             Postingan List
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        <p className="mt-1 text-sm ">
                             Daftar Instagram container milik akun ini.
                         </p>
                     </div>
@@ -347,13 +335,10 @@ export default function Home() {
                         className="
           w-full rounded-xl border border-gray-300
           px-4 py-2.5 text-sm font-medium
-          text-gray-700 transition
-          hover:bg-gray-100
+   
           disabled:opacity-50
           sm:w-auto
-          dark:border-gray-700
-          dark:text-gray-300
-          dark:hover:bg-gray-800
+      
         "
                     >
                         {loadingContainers ? "Loading..." : "Refresh"}
@@ -362,11 +347,11 @@ export default function Home() {
 
                 {/* Loading */}
                 {loadingContainers ? (
-                    <div className="px-6 py-10 text-center text-sm text-gray-500 dark:text-gray-400">
+                    <div className="px-6 py-10 text-center text-sm">
                         Loading container...
                     </div>
                 ) : data.length === 0 ? (
-                    <div className="px-6 py-10 text-center text-sm text-gray-500 dark:text-gray-400">
+                    <div className="px-6 py-10 text-center text-sm">
                         Belum ada container.
                     </div>
                 ) : (
@@ -377,18 +362,18 @@ export default function Home() {
                                 <article key={post.containerId} className="space-y-4 p-4">
                                     {/* Container ID */}
                                     <div>
-                                        <p className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                        <p className="mb-1 text-xs font-medium ">
                                             Container ID
                                         </p>
 
-                                        <p className="break-all font-mono text-xs text-gray-900 dark:text-white">
+                                        <p className="break-all font-mono text-xs ">
                                             {post.containerId}
                                         </p>
                                     </div>
 
                                     {/* Instagram User */}
                                     <div>
-                                        <p className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                        <p className="mb-1 text-xs font-medium ">
                                             Instagram User ID
                                         </p>
 
@@ -399,7 +384,7 @@ export default function Home() {
 
                                     {/* Schedule */}
                                     <div>
-                                        <p className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                        <p className="mb-1 text-xs font-medium ">
                                             Schedule
                                         </p>
 
@@ -460,33 +445,33 @@ export default function Home() {
                         {/* ================= DESKTOP ================= */}
                         <div className="hidden overflow-x-auto md:block">
                             <table className="w-full min-w-[1000px] text-left text-sm">
-                                <thead className="bg-gray-50 dark:bg-gray-950">
+                                <thead className="">
                                     <tr>
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        <th className="px-6 py-4 font-semibold ">
                                             Container ID
                                         </th>
 
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        <th className="px-6 py-4 font-semibold ">
                                             Instagram User ID
                                         </th>
 
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        <th className="px-6 py-4 font-semibold   ">
                                             Schedule
                                         </th>
 
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        {/* <th className="px-6 py-4 font-semibold   ">
                                             Status
-                                        </th>
+                                        </th> */}
 
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        <th className="px-6 py-4 font-semibold   ">
                                             Publish
                                         </th>
 
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        <th className="px-6 py-4 font-semibold   ">
                                             Created At
                                         </th>
 
-                                        <th className="px-6 py-4 font-semibold text-gray-700 dark:text-gray-300">
+                                        <th className="px-6 py-4 font-semibold  ">
                                             Updated At
                                         </th>
                                     </tr>
@@ -496,24 +481,24 @@ export default function Home() {
                                     {data.map((post) => (
                                         <tr
                                             key={post.containerId}
-                                            className="transition hover:bg-gray-50 dark:hover:bg-gray-950"
+                                            className="transition "
                                         >
                                             <td className="px-6 py-4">
-                                                <div className="max-w-[220px] truncate font-mono text-xs text-gray-900 dark:text-white">
+                                                <div className="max-w-[220px] truncate font-mono text-xs ">
                                                     {post.containerId}
                                                 </div>
                                             </td>
 
                                             <td className="px-6 py-4">
-                                                <div className="font-mono text-xs text-gray-600 dark:text-gray-400">
+                                                <div className="font-mono text-xs ">
                                                     {post.instagramUserId}
                                                 </div>
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-700 dark:text-gray-300">
+                                            <td className="px-6 py-4 ">
                                                 {formatDate(post.scheduledAt)}
                                             </td>
-
+{/* 
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${post.status === true
@@ -525,7 +510,7 @@ export default function Home() {
                                                 >
                                                     {getStatusText(post.status)}
                                                 </span>
-                                            </td>
+                                            </td> */}
 
                                             <td className="px-6 py-4">
                                                 <span
@@ -538,11 +523,11 @@ export default function Home() {
                                                 </span>
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-600 dark:text-gray-400">
+                                            <td className="px-6 py-4 ">
                                                 {formatDate(post.createAt)}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-600 dark:text-gray-400">
+                                            <td className="px-6 py-4 ">
                                                 {formatDate(post.updateAt)}
                                             </td>
                                         </tr>

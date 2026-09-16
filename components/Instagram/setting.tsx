@@ -177,9 +177,9 @@ export default function Setting() {
         }
     }, [getToken]);
 
-    useEffect(() => {
-        getConnections();
-    }, [getConnections]);
+    // useEffect(() => {
+    //     getConnections();
+    // }, [getConnections]);
 
     /* =====================================================
        CONNECT PLATFORM

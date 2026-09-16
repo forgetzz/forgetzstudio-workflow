@@ -42,7 +42,7 @@ export default function Navbar() {
 
 
   const backToDashboard = () => {
-    router.push('/')
+    router.push('/home')
   }
 
   return (

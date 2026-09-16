@@ -4,7 +4,8 @@ import Dashboard from "@/components/Dashboard"
 import Gallery from "@/components/Instagram/gallery"
 import Home from "@/components/Instagram/home"
 import Profile from "@/components/Instagram/profile"
-import Settings from "@/components/Instagram/setting"
+import Setting from "@/components/Instagram/setting"
+import Settings from "@/components/ui/settings"
 import Logout from "@/components/Logout"
 import Tools from "@/components/Tools"
 import Test from "@/components/ui/testUser"
@@ -15,7 +16,7 @@ export const dataStategy = {
    Tools: <Tools />,
    Upload: <Upload />,
    Chat: <Chat />,
-   Setting: <h1>HALLO</h1>,
+   Setting: <Settings />,
    Logout: <Logout />,
 
 }
@@ -26,7 +27,7 @@ export type Tabkey = keyof typeof dataStategy
 export const instagramStrategy = {
    home: <Home />,
    profile: <Profile />,
-   setting: <Settings />,
+   setting: <Setting />,
    gallery: <Gallery />,
 
 }

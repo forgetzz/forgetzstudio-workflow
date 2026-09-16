@@ -61,12 +61,12 @@
     --foreground: #ededed;
   }
 }
-
+/* 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-poppins);
-}
+} */
 
 .glass {
   background: rgba(255, 255, 255, 0.12);
@@ -79,7 +79,7 @@ body {
     0 8px 32px rgba(0, 0, 0, 0.25),
     inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
-
+/* 
 input:focus {
   background-color: #e6f7ff66;
   border-color: #0099ff;
@@ -89,7 +89,7 @@ input:focus {
     inset 0 1px 1px rgba(255, 255, 255, 0.25);
 
   border: solid 1px red;
-}
+} */
 
 h1 {
   size: 100px;
