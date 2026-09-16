@@ -1,3 +1,3 @@
 export * from "./instagram/media"
-export * from "./gmail/idtypes"
+export * from "./gmail/idTypes"
 export * from "./gmail/messages"
