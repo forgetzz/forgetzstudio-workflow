@@ -128,7 +128,7 @@ export default function Home() {
         </aside>
 
         {/* Content */}
-        <main className="flex-1 min-h-screen p-4 md:p-8 pb-24 md:pb-8 ">
+        <main className="flex-1 min-h-screen p-2 md:p-8 pb-24 md:pb-8 ">
           <div className="rounded-[10px_28px_10px_28px] border border-white/5 backdrop-blur-xl shadow-2xl min-h-[calc(100vh-2rem)] p-6 md:p-10 relative">
             <div className="absolute top-0 right-10 w-16 h-1.5 rounded-b-full " />
             {dataStategy[activeTab]}
