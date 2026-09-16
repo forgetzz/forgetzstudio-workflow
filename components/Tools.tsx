@@ -65,7 +65,7 @@ export default function Tools() {
       <div className=" grid gap-5 md:grid-cols-2 xl:grid-cols-3">
 
 
-        <div className="neu">
+        {/* <div className="neu">
           <GmailTool />
 
         </div>
@@ -75,9 +75,9 @@ export default function Tools() {
         <div className="neu">
           <Github />
 
-        </div>
+        </div> */}
 
-        <CardSpotlightDemo    name="Telegram"
+        {/* <CardSpotlightDemo    name="Telegram"
           description="Bot integration"
           icon={FaTelegram} />
 
@@ -86,10 +86,10 @@ export default function Tools() {
           name="Telegram"
           description="Bot integration"
           icon={FaTelegram}
-        />
+        /> */}
         <Instagram />
 
-        <ToolCard
+        {/* <ToolCard
           name="Tiktok"
           description="Social media"
           icon={FaTiktok}
@@ -100,7 +100,7 @@ export default function Tools() {
           name="WhatsApp"
           description="Bot WhatsApp"
           icon={FaWhatsapp}
-        />
+        /> */}
 
       </div>
     </div>
