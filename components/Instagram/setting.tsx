@@ -2,7 +2,8 @@
 
 import React, { ReactNode, useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { BiLogoFacebook, BiLogoTiktok, BiLogoThreads, BiLogoYoutube } from "react-icons/bi";
+import { BiLogoFacebook, BiLogoTiktok, BiLogoYoutube } from "react-icons/bi";
+import { FaGlobe } from "react-icons/fa";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
@@ -43,7 +44,7 @@ const PLATFORMS: PlatformMeta[] = [
     id: "threads",
     label: "Threads",
     description: "Cross-post teks dan media ke Threads.",
-    icon: <BiLogoThreads />,
+    icon: <FaGlobe />,
     color: "#000000",
   },
   {

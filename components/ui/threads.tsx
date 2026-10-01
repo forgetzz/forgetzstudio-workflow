@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaGithub, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaGlobe, FaInstagram } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 import ToolCard from "./toolCard";
-import { BiLogoThreads } from "react-icons/bi";
 import { CardSpotlightUi } from "./cardSpotlight";
 
 export default function Threads() {
@@ -118,7 +117,7 @@ export default function Threads() {
         <CardSpotlightUi
             name="Threads"
             description="Integration with Instagram"
-            icon={BiLogoThreads}
+            icon={FaGlobe}
             connected={connected}
             loading={loading}
             onConnect={connect}
