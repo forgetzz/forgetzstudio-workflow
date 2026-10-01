@@ -1,9 +1,14 @@
 
+import useTheme from "@/hooks/useTheme";
 import React from "react";
 
 export default function Settings() {
+  const { isDark, ThemeToggle } = useTheme()
+
+  const theme = isDark ? "bg-black" : "bg-white"
+
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 dark:bg-[#0b0b0d] sm:px-6 lg:px-8">
+    <div className={`${theme} min-h-screen  px-4 py-8 sm:px-6 lg:px-8`}>
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-8">
@@ -19,6 +24,12 @@ export default function Settings() {
             Manage your AI provider, model configuration, API keys, and
             knowledge base settings.
           </p>
+        </div>
+
+        <div className="space-y-6">
+          <button onClick={ThemeToggle}>
+            theme
+          </button>
         </div>
 
         <div className="space-y-6">

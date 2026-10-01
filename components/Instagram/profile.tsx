@@ -140,9 +140,6 @@ const AlertIcon = () => (
   </svg>
 );
 
-/* =========================================================
-   COMPONENT
-========================================================= */
 
 export default function Profile() {
   const { getToken } = useAuth();
@@ -150,87 +147,118 @@ export default function Profile() {
   const [data, setData] = useState<InstagramResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+const STORAGE_KEY = "instagram_profile";
 
-  /* =====================================================
-     GET PROFILE
-  ===================================================== */
+const getProfile = useCallback(async () => {
+  try {
+    setLoading(true);
+    setError("");
 
-  const getProfile = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError("");
+    // 1. Cek localStorage terlebih dahulu
+    const cached = localStorage.getItem(STORAGE_KEY);
 
-      const token = await getToken();
+    if (cached) {
+      const parsed: InstagramResponse = JSON.parse(cached);
 
-      if (!token) {
-        throw new Error("Authentication token tidak ditemukan");
-      }
+      setData(parsed);
+      return;
+    }
 
-      const response = await fetch(`${BASE_URL}/instagram/me`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // 2. Kalau belum ada cache, ambil token
+    const token = await getToken();
 
-      const text = await response.text();
+    if (!token) {
+      throw new Error("Authentication token tidak ditemukan");
+    }
 
-      if (!response.ok) {
-        let message = `Gagal mengambil profile (${response.status})`;
+    // 3. Fetch ke backend
+    const response = await fetch(`${BASE_URL}/instagram/me`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-        try {
-          const errorData = JSON.parse(text);
-          if (errorData?.message) {
-            message = Array.isArray(errorData.message)
-              ? errorData.message.join(", ")
-              : errorData.message;
-          }
-        } catch {
-          // Response bukan JSON
-        }
+    const text = await response.text();
 
-        throw new Error(message);
-      }
-
-      let result: InstagramBackendResponse;
+    if (!response.ok) {
+      let message = `Gagal mengambil profile (${response.status})`;
 
       try {
-        result = JSON.parse(text);
+        const errorData = JSON.parse(text);
+
+        if (errorData?.message) {
+          message = Array.isArray(errorData.message)
+            ? errorData.message.join(", ")
+            : errorData.message;
+        }
       } catch {
-        throw new Error("Response backend bukan JSON yang valid");
+        // Response bukan JSON
       }
 
-      const normalizedData: InstagramResponse = {
-        profile: result.profile ?? {
-          id: "",
-          username: "",
-        },
-        media: Array.isArray(result.media)
-          ? result.media
-          : Array.isArray(result.posts)
-            ? result.posts
-            : [],
-        paging: result.paging,
-      };
-
-      setData(normalizedData);
-    } catch (err) {
-      console.error("Get Instagram profile error:", err);
-      setError(
-        err instanceof Error ? err.message : "Gagal mengambil profile Instagram"
-      );
-    } finally {
-      setLoading(false);
+      throw new Error(message);
     }
-  }, [getToken]);
+
+    // 4. Parse response
+    let result: InstagramBackendResponse;
+
+    try {
+      result = JSON.parse(text);
+    } catch {
+      throw new Error("Response backend bukan JSON yang valid");
+    }
+
+    // 5. Normalisasi data
+    const normalizedData: InstagramResponse = {
+      profile: result.profile ?? {
+        id: "",
+        username: "",
+      },
+
+      media: Array.isArray(result.media)
+        ? result.media
+        : Array.isArray(result.posts)
+          ? result.posts
+          : [],
+
+      paging: result.paging,
+    };
+
+    // 6. Simpan data terbaru ke localStorage
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(normalizedData)
+    );
+
+    // 7. Simpan ke state
+    setData(normalizedData);
+
+  } catch (err) {
+    console.error("Get Instagram profile error:", err);
+
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Gagal mengambil profile Instagram"
+    );
+  } finally {
+    setLoading(false);
+  }
+}, [getToken]);
+
+
+// Refresh paksa ambil data terbaru dari backend
+const refresh = useCallback(async () => {
+  localStorage.removeItem(STORAGE_KEY);
+
+  await getProfile();
+}, [getProfile]);
 
   useEffect(() => {
     getProfile();
   }, [getProfile]);
 
-  /* =====================================================
-     SKELETON LOADING
-  ===================================================== */
+
 
   if (loading) {
     return (
@@ -266,9 +294,7 @@ export default function Profile() {
     );
   }
 
-  /* =====================================================
-     ERROR STATE
-  ===================================================== */
+
 
   if (error) {
     return (
@@ -306,9 +332,6 @@ export default function Profile() {
   const { profile } = data;
   const media = Array.isArray(data.media) ? data.media : [];
 
-  /* =====================================================
-     MAIN RENDER
-  ===================================================== */
 
   return (
     <main className="min-h-screen p-3 sm:p-6 md:p-10 transition-colors">
@@ -357,7 +380,7 @@ export default function Profile() {
 
               {/* STATS */}
               <div className="grid grid-cols-3 gap-2 py-2 max-w-md mx-auto md:mx-0">
-                <div className="neu-inset p-2.5 rounded-xl text-center">
+                <div className="neu-button p-2.5 rounded-xl text-center">
                   <p className="text-sm sm:text-base font-extrabold ">
                     {profile.media_count ?? media.length}
                   </p>
@@ -366,7 +389,7 @@ export default function Profile() {
                   </p>
                 </div>
 
-                <div className="neu-inset p-2.5 rounded-xl text-center">
+                <div className="neu-button p-2.5 rounded-xl text-center">
                   <p className="text-sm sm:text-base font-extrabold ">
                     {profile.followers_count ?? 0}
                   </p>
@@ -375,7 +398,7 @@ export default function Profile() {
                   </p>
                 </div>
 
-                <div className="neu-inset p-2.5 rounded-xl text-center">
+                <div className="neu-button p-2.5 rounded-xl text-center">
                   <p className="text-sm sm:text-base font-extrabold">
                     {profile.follows_count ?? 0}
                   </p>
@@ -388,7 +411,7 @@ export default function Profile() {
               {/* ACCOUNT TYPE BADGE */}
               {profile.account_type && (
                 <div className="flex justify-center md:justify-start">
-                  <span className="neu-inset inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  <span className="neu-button inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     {profile.account_type}
                   </span>
@@ -409,14 +432,14 @@ export default function Profile() {
                 Konten terhubung dari Instagram
               </p>
             </div>
-            <span className="neu-inset px-2.5 py-1 rounded-md text-[10px] font-semibold text-gray-500 dark:text-gray-400">
+            <span className="neu-button px-2.5 py-1 rounded-md text-[10px] font-semibold ">
               {media.length} Ditemukan
             </span>
           </div>
 
           {media.length === 0 ? (
             <div className="neu-inset flex min-h-[220px] flex-col items-center justify-center rounded-xl p-6 text-center">
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs ">
                 Belum ada postingan yang dapat ditampilkan.
               </p>
             </div>
@@ -438,7 +461,7 @@ export default function Profile() {
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
+                      <div className="flex h-full w-full items-center justify-center text-xs ">
                         Tidak ada pratinjau
                       </div>
                     )}
@@ -501,8 +524,10 @@ export default function Profile() {
           )}
         </section>
 
-        {/* ================= ACCOUNT DETAILS ================= */}
-        <section className="neu p-5 sm:p-6 rounded-2xl space-y-4">
+  <button onClick={refresh}>
+  Refresh
+</button>
+        {/* <section className="neu p-5 sm:p-6 rounded-2xl space-y-4">
           <div>
             <h2 className="text-sm font-bold text-gray-800 dark:text-gray-100">
               Informasi Akun Instagram
@@ -557,7 +582,7 @@ export default function Profile() {
               </div>
             )}
           </div>
-        </section>
+        </section> */}
 
       </div>
     </main>

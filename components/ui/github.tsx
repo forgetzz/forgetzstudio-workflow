@@ -5,6 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 import ToolCard from "./toolCard";
+import { CardSpotlightUi } from "./cardSpotlight";
 
 export default function Github() {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -113,7 +114,7 @@ const connect = async () => {
   };
 
   return (
-    <ToolCard
+    <CardSpotlightUi
       name="GitHub"
       description="Access repositories"
       icon={FaGithub}

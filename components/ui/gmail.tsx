@@ -5,6 +5,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 import ToolCard from "./toolCard";
+import { CardSpotlightUi } from "./cardSpotlight";
 
 
 
@@ -36,26 +37,27 @@ export default function GmailTool() {
           );
         }
 
-        const response = await fetch(
-          `${apiUrl}/gmail/connect`,
-          {
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-              Accept: "application/json",
-            },
-          }
-        );
+     const response = await fetch(
+  `${apiUrl}/gmail/connect`,
+  {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+      Accept: "application/json",
+    },
+  }
+);
 
-        if (!response.ok) {
-          throw new Error(
-            `Gagal mengecek Gmail (${response.status})`
-          );
-        }
+if (!response.ok) {
+  throw new Error(
+    `Gagal mengecek Gmail (${response.status})`
+  );
+}
 
-        const data: {
-          connected: boolean;
-        } = await response.json();
+const data: {
+  connected: boolean;
+} = await response.json();
 
+    
         setConnected(data.connected);
       } catch (error) {
         console.error(
@@ -96,7 +98,7 @@ export default function GmailTool() {
   };
  
   return (
-    <ToolCard
+    <CardSpotlightUi
       name="Gmail"
       description="Automation your gmail"
       icon={FaGoogle}

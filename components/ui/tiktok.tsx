@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaGithub, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaTiktok } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { CardSpotlightUi } from "./cardSpotlight";
 
 
-export default function Instagram() {
+export default function Tiktok() {
     const { user, isLoaded, isSignedIn } = useUser();
     const { getToken } = useAuth();
 
@@ -45,7 +45,7 @@ export default function Instagram() {
                 }
 
                 const response = await fetch(
-                    `${apiUrl}/instagram/connect`,
+                    `${apiUrl}/tiktok/connect`,
                     {
                         method: "GET",
                         headers: {
@@ -98,7 +98,7 @@ export default function Instagram() {
                 );
             }
 
-            window.location.href = `${apiUrl}/instagram`;
+            window.location.href = `${apiUrl}/tiktok`;
         } catch (error) {
             console.error("instagram OAuth error:", error);
 
@@ -115,9 +115,9 @@ export default function Instagram() {
 
     return (
         < CardSpotlightUi
-            name="instagram"
-            description="Instagram Automation"
-            icon={FaInstagram}
+            name="Tiktok"
+            description="Tiktok Automation"
+            icon={FaTiktok}
             connected={connected}
             loading={loading}
             onConnect={connect}

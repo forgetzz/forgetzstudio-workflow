@@ -16,13 +16,13 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6"
     >
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between rounded-3xl glass-panel surface-raised-sm px-4 py-2.5 sm:px-5">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between rounded-3xl bg-white/5 backdrop-blur-3xl surface-raised-sm px-4 py-2.5 sm:px-5">
         <a href="#top" className="flex items-center gap-2">
           <span className="surface-inset flex h-8 w-8 items-center justify-center rounded-xl text-ink-900 dark:text-surface-100">
             <Workflow size={16} strokeWidth={2.25} />
           </span>
           <span className="text-[15px] font-semibold tracking-tight text-ink-900 dark:text-surface-100">
-            ForgetzStudio
+            Forgetzstudio
           </span>
         </a>
 

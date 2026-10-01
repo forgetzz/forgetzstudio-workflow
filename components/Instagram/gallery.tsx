@@ -3,6 +3,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useContainerInstagram } from "@/store/selectedContainer";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -13,11 +15,15 @@ interface VideoData {
 
 export default function Gallery() {
     const { getToken } = useAuth();
-
+    const { activeContainer, setActiveContainer } = useContainerInstagram()
     const [video, setVideo] = useState<VideoData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const router = useRouter()
 
+    const goToUploadPage = () => {
+        router.push("/home")
+    }
     const getVideos = async () => {
         try {
             setLoading(true);
@@ -97,6 +103,10 @@ export default function Gallery() {
 
     };
 
+    const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
+      
+    }
+
     return (
         <main className="min-h-screen p-6 md:p-10">
             <div className="mx-auto w-full max-w-7xl">
@@ -110,14 +120,14 @@ export default function Gallery() {
                                 Video Gallery
                             </h1>
 
-                            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            <p className="mt-2 text-sm">
                                 Video yang sudah di-upload dan siap
                                 dibuat menjadi Instagram Container.
                             </p>
                         </div>
 
                         <div className="neu px-5 py-3">
-                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                            <div className="text-xs">
                                 Total Video
                             </div>
 
@@ -134,9 +144,9 @@ export default function Gallery() {
 
                     <div className="flex items-center gap-3">
 
-                        <div className="neu-inset flex h-10 w-10 items-center justify-center text-lg">
+                        {/* <div className=" flex h-10 w-10 items-center justify-center text-lg">
                             🎬
-                        </div>
+                        </div> */}
 
                         <div>
                             <p className="text-sm font-semibold">
@@ -151,6 +161,7 @@ export default function Gallery() {
                     </div>
 
                     <button
+                        onClick={goToUploadPage}
                         type="button"
                         className="neu-button px-5 py-2.5 text-sm font-semibold"
                     >
@@ -216,8 +227,56 @@ export default function Gallery() {
                 )}
 
                 {/* Video */}
-             {!loading && !error && video && ( <div className= "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"> {video.videoUrl.map((url, index) => ( <article key={index} className="neu overflow-hidden" > {/* Video Preview */} <div className="relative aspect-[9/16] overflow-hidden"> <video src={cleanVideoUrl(url)} className="h-full w-full object-cover" controls preload="metadata" /> {/* Status */} <div className="absolute left-3 top-3"> <span className="neu px-3 py-1.5 text-xs font-semibold"> Ready </span> </div> </div> {/* Information */} <div className="p-4"> <h3 className="text-sm font-semibold"> Video {index + 1} </h3> <p className="mt-2 truncate text-xs text-gray-500 dark:text-gray-400" title={cleanVideoUrl(url)} > {cleanVideoUrl(url)} </p> <button type="button" onClick={handleCreateContainer} className="neu-button mt-4 w-full px-4 py-2.5 text-xs font-semibold" > Create Instagram Container </button> </div> </article> ))} </div> )}
+                {!loading && !error && video && (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {video.videoUrl.map((url, index) => (
+                            <article
+                                key={index}
+                                className="neu overflow-hidden"
+                            >
+                                {/* Video Preview */}
+                                <div className="relative aspect-[9/16] overflow-hidden">
+                                    <video
+                                        src={cleanVideoUrl(url)}
+                                        className="h-full w-full object-cover"
+                                        controls
+                                        preload="metadata"
+                                    />
 
+                                    {/* Status */}
+                                    <div className="absolute left-3 top-3">
+                                        <span className="neu px-3 py-1.5 text-xs font-semibold">
+                                            Ready
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Information */}
+                                <div className="p-4">
+                                    <h3 className="text-sm font-semibold">
+                                        Video {index + 1}
+                                    </h3>
+
+                                    <p
+                                        className="mt-2 truncate text-xs text-gray-500 dark:text-gray-400"
+                                        title={cleanVideoUrl(url)}
+                                        
+                                    >
+                                       {activeContainer} {cleanVideoUrl(url)}
+                                    </p>
+                                        <input type="text" onChange={onChangeEvent} />
+                                    <button
+                                        type="button"
+                                        onClick={handleCreateContainer}
+                                        className="neu-button mt-4 w-full px-4 py-2.5 text-xs font-semibold"
+                                    >
+                                        Create Instagram Container
+                                    </button>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                )}
             </div>
         </main>
     );

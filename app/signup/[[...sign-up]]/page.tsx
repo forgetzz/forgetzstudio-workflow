@@ -15,7 +15,7 @@ export default function page() {
       // background color 
       "bg-black"
     )}>
-      <SignUp signInUrl='signin' />
+      <SignUp signInUrl='signin' fallbackRedirectUrl={"/home"} />
     </div>
   )
 }

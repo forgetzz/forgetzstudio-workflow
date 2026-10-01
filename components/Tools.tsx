@@ -19,7 +19,9 @@ import ToolCard from "./ui/toolCard";
 import GmailTool from "./ui/gmail";
 import Github from "./ui/github";
 import Instagram from "./ui/instagram";
-import { CardSpotlightDemo } from "./ui/cardSpotlight";
+import { CardSpotlightUi } from "./ui/cardSpotlight";
+import Threads from "./ui/threads";
+import Tiktok from "./ui/tiktok";
 
 export default function Tools() {
 
@@ -32,28 +34,31 @@ export default function Tools() {
       {/* HEADER */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-3xl font-bold ">
             Tool Registry
           </h1>
 
-          <p className="mt-2 text-white/60">
+          <p className="mt-2 /60">
             Connect external services for your AI agents.
           </p>
         </div>
 
         <button
           className="
+          neu-button
+          active:neu-button-active
+          active:bg-emerald-900
             flex
             items-center
             gap-2
             rounded-2xl
-            bg-cyan-500
+            bg-emerald-800
             px-5
             py-3
             font-medium
             text-white
             transition
-            hover:bg-cyan-400
+            hover:bg-emerald-700
           "
         >
           <Plus size={18} />
@@ -67,27 +72,35 @@ export default function Tools() {
 
         {/* <div className="neu">
           <GmailTool />
-
         </div>
 
 
 
         <div className="neu">
           <Github />
-
         </div> */}
 
-        {/* <CardSpotlightDemo    name="Telegram"
+        {/* <CardSpotlightUi name="Telegram"
           description="Bot integration"
-          icon={FaTelegram} />
+          icon={FaTelegram} /> */}
 
-
+        {/* 
         <ToolCard
           name="Telegram"
           description="Bot integration"
           icon={FaTelegram}
         /> */}
-        <Instagram />
+        <div className="neu">
+          <Instagram />
+        </div>
+        <div className="neu">
+          <Tiktok />
+        </div>
+
+        <div className="neu">
+          <Threads />
+        </div>
+
 
         {/* <ToolCard
           name="Tiktok"
@@ -96,11 +109,11 @@ export default function Tools() {
         />
 
 
-        <ToolCard
-          name="WhatsApp"
-          description="Bot WhatsApp"
-          icon={FaWhatsapp}
-        /> */}
+        // <ToolCard
+        //   name="WhatsApp"
+        //   description="Bot WhatsApp"
+        //   icon={FaWhatsapp}
+        // /> */}
 
       </div>
     </div>

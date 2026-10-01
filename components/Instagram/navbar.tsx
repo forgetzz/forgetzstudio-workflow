@@ -53,7 +53,7 @@ export default function Navbar() {
         onClick={backToDashboard}
         className="text-xl font-bold tracking-tight"
       >
-        Instagram
+        forgetzstudio
       </button>
 
       {/* Desktop Navigation */}
@@ -91,7 +91,7 @@ export default function Navbar() {
           className="
             neu absolute left-0 right-0 top-full z-50 mt-3
             flex flex-col gap-2 rounded-2xl p-3
-            bg-white dark:bg-slate-900
+            bg-white backdrop-blur-lg
             md:hidden
           "
         >

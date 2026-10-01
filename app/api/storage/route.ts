@@ -40,9 +40,10 @@ export async function POST(
                 },
             );
         }
+const safeFileName = fileName.replace(/\s+/g, "-");
 
-        const key =
-            `videos/${crypto.randomUUID()}-${fileName}`;
+const key =
+    `videos/${crypto.randomUUID()}-${safeFileName}`;
         const videoUrl =
             `${process.env.R2_PUBLIC_URL}/${key}`;
         const command = new PutObjectCommand({

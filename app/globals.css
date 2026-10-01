@@ -4,29 +4,52 @@
   --font-poppins: var(--font-poppins) --background: #ffffff;
   --foreground: #171717;
   --color-neu-bg: #e5e7eb;
-  --neu-light: rgba(255, 255, 255, 0.8);
+  --neu-light: rgba(255, 255, 255, 0.539);
   --neu-dark: rgba(0, 0, 0, 0.6);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+   --font-heading: var(--font-geist);
+  --font-body: var(--font-inter);
+  --font-code: var(--font-jetbrains);
 }
 
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+code,
+pre {
+  font-family: var(--font-code);
+}
 .dark {
   --neu-bg: #1f2937;
-  --neu-light: rgba(255, 255, 255, 0.5);
-  --neu-dark: rgba(0, 0, 0, 0.6);
+  --neu-light: rgba(255, 255, 255, 0.388);
+  --neu-dark: rgba(0, 0, 0, 0.388);
 }
 
 @utility neu {
   background: var(--neu-bg);
   border-radius: 1rem;
   box-shadow:
-    -8px 8px 16px var(--neu-light),
-    8px 8px 16px var(--neu-dark);
+    -5px -2px 16px var(--neu-light),
+    8px 8px 20px var(--neu-dark);
 }
 
 @utility neu-inset {
   background: var(--neu-bg);
   border-radius: 1, 5rem;
   box-shadow:
-    inset -6px -6px 12px var(--neu-light),
+    inset -4px 10px 20px var(--neu-light),
     inset 6px 6px 12px var(--neu-dark);
 }
 
@@ -35,7 +58,7 @@
   border-radius: 0.75rem;
   padding: 0.75rem 1.5rem;
   box-shadow:
-    -5px -5px 10px var(--neu-light),
+    -3px -3px 20px var(--neu-light),
     5px 5px 10px var(--neu-dark);
   transition:
     transfrom 200ms ease,

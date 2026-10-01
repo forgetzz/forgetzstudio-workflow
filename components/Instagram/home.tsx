@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "@clerk/nextjs";
 import { InstagramContainer, ContainerResponse } from "@/types";
+import { toWitaISOString } from "@/utils/convertDate";
 export default function Home() {
 
     const { getToken } = useAuth();
@@ -15,7 +16,8 @@ export default function Home() {
     const [data, setData] = useState<InstagramContainer[]>([]);
 
     const [loading, setLoading] = useState(false);
-    const [loadingContainers, setLoadingContainers] = useState(false);
+    const [loadingContainers, setLoadingContainers] = useState
+        (false);
 
     const formatDate = (date: string | null) => {
         if (!date) {
@@ -34,6 +36,10 @@ export default function Home() {
         });
     };
 
+
+
+
+
     const getContainers = async () => {
         try {
             setLoadingContainers(true);
@@ -44,7 +50,8 @@ export default function Home() {
                 console.error("Token tidak ditemukan");
                 return;
             }
-            const response = await axios.get<InstagramContainer>(
+
+            const response = await axios.get<InstagramContainer[]>(
                 "http://localhost:3002/instagram/instagramContainerUser",
                 {
                     headers: {
@@ -55,19 +62,29 @@ export default function Home() {
 
             console.log("Container response:", response.data);
 
-            setData([response.data]);
-
-
+            setData(response.data);
         } catch (error) {
             console.error("Gagal mengambil container:", error);
         } finally {
             setLoadingContainers(false);
         }
     };
-
     const createContainer = async () => {
         if (!scheduleDate) {
-            return alert("fields tidak boleh kosong")
+            return alert("Fields tidak boleh kosong");
+        }
+
+        const now = new Date();
+        const schedule = new Date(scheduleDate);
+
+        const minimumSchedule = new Date(
+            now.getTime() + 0 * 0 * 0 * 1000
+        );
+
+        if (schedule < minimumSchedule) {
+            return alert(
+                "Jadwal publish harus minimal 3 jam dari sekarang"
+            );
         }
 
         try {
@@ -85,13 +102,15 @@ export default function Home() {
                 return;
             }
 
-            const response = await axios.post<ContainerResponse>(
-                `${BASE_URL}/instagram/CreatecontainerId`,
+            const response = await axios.post(
+                `${BASE_URL}/mediapost/createContainer`,
                 {
                     videoUrl,
                     caption,
                     audioName,
-                    scheduledAt: scheduleDate || null,
+                    scheduledAt: scheduleDate
+                        ? toWitaISOString(scheduleDate)
+                        : undefined,
                 },
                 {
                     headers: {
@@ -100,7 +119,10 @@ export default function Home() {
                 }
             );
 
-            console.log("Create container:", response.data);
+            console.log(
+                "Create containers:",
+                response.data
+            );
 
             if (!response.data.success) {
                 alert("Gagal membuat container");
@@ -109,22 +131,28 @@ export default function Home() {
 
             alert("Container berhasil dibuat");
 
-            // Reset form
             setVideoUrl("");
             setCaption("");
             setAudioName("");
             setScheduleDate("");
 
-            // Ambil data terbaru
             await getContainers();
+
         } catch (error) {
-            console.error("Gagal membuat container:", error);
+            console.error(
+                "Gagal membuat container:",
+                error
+            );
 
             if (axios.isAxiosError(error)) {
-                console.error("Response error:", error.response?.data);
+                console.error(
+                    "Response error:",
+                    error.response?.data
+                );
             }
 
             alert("Gagal membuat container");
+
         } finally {
             setLoading(false);
         }
@@ -168,16 +196,16 @@ export default function Home() {
                     <span className="h-2 w-2 shrink-0 rounded-full bg-pink-500" />
 
                     <span className="text-sm font-medium ">
-                        Instagram
+                     Cross Post Platform
                     </span>
                 </div>
 
                 <h1 className="text-2xl font-bold text-black">
-                    Instagram Multi Auto Post
+                 Multi Auto Post
                 </h1>
 
                 <p className="mt-2 max-w-2xl text-sm">
-                    Buat dan kelola Instagram Reels container.
+                    Buat dan kelola konten anda.
                 </p>
             </header>
 
@@ -374,11 +402,11 @@ export default function Home() {
                                     {/* Instagram User */}
                                     <div>
                                         <p className="mb-1 text-xs font-medium ">
-                                            Instagram User ID
+                                            ProviderAccountId
                                         </p>
 
                                         <p className="break-all font-mono text-xs text-gray-600 dark:text-gray-400">
-                                            {post.instagramUserId}
+                                            {post.platfromUserId}
                                         </p>
                                     </div>
 
@@ -452,8 +480,12 @@ export default function Home() {
                                         </th>
 
                                         <th className="px-6 py-4 font-semibold ">
-                                            Instagram User ID
+                                            Platfrom
                                         </th>
+                                        <th className="px-6 py-4 font-semibold ">
+                                            Platfrom userId
+                                        </th>
+
 
                                         <th className="px-6 py-4 font-semibold   ">
                                             Schedule
@@ -467,13 +499,7 @@ export default function Home() {
                                             Publish
                                         </th>
 
-                                        <th className="px-6 py-4 font-semibold   ">
-                                            Created At
-                                        </th>
 
-                                        <th className="px-6 py-4 font-semibold  ">
-                                            Updated At
-                                        </th>
                                     </tr>
                                 </thead>
 
@@ -488,17 +514,22 @@ export default function Home() {
                                                     {post.containerId}
                                                 </div>
                                             </td>
+                                            <td className="px-6 py-4">
+                                                <div className="max-w-[220px] truncate font-mono text-xs ">
+                                                    {post.platfrom}
+                                                </div>
+                                            </td>
 
                                             <td className="px-6 py-4">
                                                 <div className="font-mono text-xs ">
-                                                    {post.instagramUserId}
+                                                    {post.platfromUserId}
                                                 </div>
                                             </td>
 
                                             <td className="px-6 py-4 ">
                                                 {formatDate(post.scheduledAt)}
                                             </td>
-{/* 
+                                            {/* 
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${post.status === true
@@ -523,13 +554,6 @@ export default function Home() {
                                                 </span>
                                             </td>
 
-                                            <td className="px-6 py-4 ">
-                                                {formatDate(post.createAt)}
-                                            </td>
-
-                                            <td className="px-6 py-4 ">
-                                                {formatDate(post.updateAt)}
-                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>

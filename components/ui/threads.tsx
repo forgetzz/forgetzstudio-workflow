@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { FaGithub, FaInstagram } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
+import ToolCard from "./toolCard";
+import { BiLogoThreads } from "react-icons/bi";
 import { CardSpotlightUi } from "./cardSpotlight";
 
-
-export default function Instagram() {
+export default function Threads() {
     const { user, isLoaded, isSignedIn } = useUser();
     const { getToken } = useAuth();
 
@@ -16,7 +17,7 @@ export default function Instagram() {
     const [connected, setConnected] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    const apiUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_BASE_URL!;
     useEffect(() => {
         const checkConnection = async () => {
             if (!isLoaded) return;
@@ -45,7 +46,7 @@ export default function Instagram() {
                 }
 
                 const response = await fetch(
-                    `${apiUrl}/instagram/connect`,
+                    `${apiUrl}/threads/connect`,
                     {
                         method: "GET",
                         headers: {
@@ -57,7 +58,7 @@ export default function Instagram() {
 
                 if (!response.ok) {
                     throw new Error(
-                        `Gagal mengecek instagram (${response.status})`
+                        `Gagal mengecek threads (${response.status})`
                     );
                 }
 
@@ -98,7 +99,7 @@ export default function Instagram() {
                 );
             }
 
-            window.location.href = `${apiUrl}/instagram`;
+            window.location.href = `${apiUrl}/threads`;
         } catch (error) {
             console.error("instagram OAuth error:", error);
 
@@ -110,14 +111,14 @@ export default function Instagram() {
         }
     };
     const manage = () => {
-        router.push("/instagram");
+        router.push("/home");
     };
 
     return (
-        < CardSpotlightUi
-            name="instagram"
-            description="Instagram Automation"
-            icon={FaInstagram}
+        <CardSpotlightUi
+            name="Threads"
+            description="Integration with Instagram"
+            icon={BiLogoThreads}
             connected={connected}
             loading={loading}
             onConnect={connect}

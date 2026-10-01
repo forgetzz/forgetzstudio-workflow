@@ -113,6 +113,7 @@ export default function Upload() {
       const data = await response.json();
 
 
+console.log("3. Presigned URL received:", data);
 
       const uploadResponse = await fetch(
         data.uploadUrl,
@@ -373,7 +374,7 @@ const saveResponse = await fetch(
               <span className="text-sm text-slate-500">
                 Maximum file size:
                 <span className="text-blue-300">
-                  {" "}20 MB
+                  {" "}250 MB
                 </span>
               </span>
 

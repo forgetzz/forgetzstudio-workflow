@@ -182,7 +182,7 @@ export default function Chat() {
 
       {/* Input Area */}
       <div className="shrink-0 border-t border-white/10 bg-[#08090c]/95 px-3 py-3 backdrop-blur-xl sm:px-6 sm:py-5">
-        <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full ">
           <div className="flex items-end gap-2 rounded-2xl border border-white/10 bg-slate-900/60 p-2 transition focus-within:border-blue-500/40 sm:gap-3 sm:p-3">
             <textarea
               value={message}

@@ -82,14 +82,14 @@ export default function Home() {
 
             <div className="p-8 border-b border-white/5">
               <div className="flex items-center gap-3">
-                <div className="rotate-[-3deg] w-9 h-9 rounded-md bg-[#fffcf8] flex items-center justify-center shadow-lg shadow-[#fffcf9]/20">
-                  <span className="font-mono text-[13px] font-bold text-[#12151C]">AI</span>
+                <div className="rotate-[-3deg] w-9 h-9 rounded-md flex items-center justify-center shadow-lg shadow-[#fffcf9]/20">
+                  <span className="font-mono text-[13px] font-bold ">AI</span>
                 </div>
-                <h1 className="text-[22px] font-semibold text-[#F1ECE1] tracking-tight" style={{ fontFamily: "'Fraunces', serif" }}>
+                <h1 className="text-[22px] font-semibold tracking-tight" style={{ fontFamily: "'Fraunces', serif" }}>
                   Agent Workspace
                 </h1>
               </div>
-              <p className="text-[13px] text-[#fffcf9]/70 mt-2 font-mono tracking-wide">
+              <p className="text-[13px] mt-2 font-mono tracking-wide">
                 {user?.fullName}
               </p>
 
@@ -111,8 +111,8 @@ export default function Home() {
                     onClick={() => setActiveTab(menu.value)}
                     className={`group relative w-full flex items-center gap-4 rounded-xl px-5 py-3.5 transition-all duration-300 ${tilt}
                 ${active
-                        ? "text-[#F1ECE1] neu-button-active"
-                        : "text-white/50 hover:text-white/85 hover:translate-x-0.5"
+                        ? "neu-button-active"
+                        : "  hover:translate-x-0.5"
                       }`}
                   >
 
