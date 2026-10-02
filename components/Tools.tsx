@@ -22,6 +22,7 @@ import Instagram from "./ui/instagram";
 import { CardSpotlightUi } from "./ui/cardSpotlight";
 import Threads from "./ui/threads";
 import Tiktok from "./ui/tiktok";
+import Facebook from "./ui/facebook";
 
 export default function Tools() {
 
@@ -95,6 +96,9 @@ export default function Tools() {
         </div>
         <div className="neu">
           <Tiktok />
+        </div>
+        <div className="neu">
+          <Facebook />
         </div>
 
         <div className="neu">
