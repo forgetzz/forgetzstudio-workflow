@@ -17,7 +17,7 @@ export async function GET() {
 
   if (!apiUrl) {
     return NextResponse.json(
-      { message: "NEXT_PUBLIC_BASE_URL belum dikonfigurasi" },
+      { message: "NEXT_PUBLIC_BASE_URL, belum dikonfigurasi" },
       { status: 500 }
     );
   }
