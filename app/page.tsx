@@ -23,7 +23,7 @@ import { useEffect } from "react";
 export default function Home() {
   const user = useUser()
   const router = useRouter()
-  
+
   useEffect(() => {
     const goToHomePage = () => {
       if (user.user?.emailAddresses) {
@@ -61,17 +61,4 @@ export default function Home() {
   );
 }
 
-
-function TypeScriptPage() {
-
-
-
-  return (
-    <div>
-      <h1>TypeScript Playground</h1>
-
-      <p>Open file ini dan arahkan mouse ke setiap type.</p>
-    </div>
-  );
-}
 

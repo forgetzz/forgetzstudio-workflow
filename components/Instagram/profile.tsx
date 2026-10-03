@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/utils";
 
-const BASE_URL = "http://localhost:3002";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 /* =========================================================
    TYPES

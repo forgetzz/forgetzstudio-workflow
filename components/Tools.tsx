@@ -7,25 +7,13 @@ import {
   Plus,
 } from "lucide-react";
 
-import {
-  FaDiscord,
-  FaInstagram,
-  FaSlack,
-  FaTelegram,
-  FaTiktok,
-  FaWhatsapp,
-} from "react-icons/fa";
-import ToolCard from "./ui/toolCard";
-import GmailTool from "./ui/gmail";
-import Github from "./ui/github";
+
 import Instagram from "./ui/instagram";
-import { CardSpotlightUi } from "./ui/cardSpotlight";
 import Threads from "./ui/threads";
 import Tiktok from "./ui/tiktok";
 import Facebook from "./ui/facebook";
 
 export default function Tools() {
-
 
 
 

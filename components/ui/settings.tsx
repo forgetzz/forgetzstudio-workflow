@@ -3,7 +3,7 @@ import useTheme from "@/hooks/useTheme";
 import React from "react";
 
 export default function Settings() {
-  const { isDark, ThemeToggle } = useTheme()
+  const { isDark } = useTheme()
 
   const theme = isDark ? "bg-black" : "bg-white"
 
@@ -26,11 +26,6 @@ export default function Settings() {
           </p>
         </div>
 
-        <div className="space-y-6">
-          <button onClick={ThemeToggle}>
-            theme
-          </button>
-        </div>
 
         <div className="space-y-6">
           {/* AI Provider */}
