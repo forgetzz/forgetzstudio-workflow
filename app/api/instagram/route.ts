@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function GET(platform:string) {
+export async function GET() {
   const { getToken } = await auth();
 
   const token = await getToken();
@@ -22,7 +22,7 @@ export async function GET(platform:string) {
     );
   }
 
-  const response = await fetch(`${apiUrl}/${platform}`, {
+  const response = await fetch(`${apiUrl}/instagram`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
