@@ -4,6 +4,8 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { BiLogoFacebook, BiLogoTiktok, BiLogoYoutube } from "react-icons/bi";
 import { FaGlobe } from "react-icons/fa";
+import useTheme from "@/hooks/useTheme";
+import { Colors } from "@/utils/colors";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
@@ -84,6 +86,8 @@ export default function Setting() {
   const [revoking, setRevoking] = useState<Platform | null>(null);
   const [confirmRevoke, setConfirmRevoke] = useState<Platform | null>(null);
   const [toast, setToast] = useState("");
+  const { isDark } = useTheme()
+   const theme = isDark ? Colors.Primary : Colors.Secondry
 
   useEffect(() => {
     const checkTiktokConnection = async () => {
@@ -316,11 +320,11 @@ export default function Setting() {
   const anyConnected = PLATFORMS.some((p) => connections[p.id]?.connected);
 
   return (
-    <main className="min-h-screen p-3 sm:p-6 md:p-10 text-black">
+    <main className="min-h-screen p-3 sm:p-6 md:p-10 ">
       <div className="mx-auto w-full space-y-4 sm:space-y-6">
         <div className="px-1">
           <h1 className="text-xl font-bold sm:text-2xl">Settings</h1>
-          <p className="mt-1 text-sm text-black">
+          <p className="mt-1 text-sm ">
             Kelola platform yang terhubung untuk cross-posting.
           </p>
         </div>

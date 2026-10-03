@@ -4,6 +4,9 @@ import axios from "axios";
 import { useAuth } from "@clerk/nextjs";
 import { InstagramContainer, ContainerResponse } from "@/types";
 import { toWitaISOString } from "@/utils/convertDate";
+import useTheme from "@/hooks/useTheme";
+import { Colors } from "@/utils/colors";
+import { cn } from "@/utils";
 export default function Home() {
 
     const { getToken } = useAuth();
@@ -12,13 +15,15 @@ export default function Home() {
     const [caption, setCaption] = useState("");
     const [audioName, setAudioName] = useState("");
     const [scheduleDate, setScheduleDate] = useState("");
-
     const [data, setData] = useState<InstagramContainer[]>([]);
-
     const [loading, setLoading] = useState(false);
     const [loadingContainers, setLoadingContainers] = useState
         (false);
-
+    const url = process.env.NEXT_PUBLIC_BASE_URL
+     const {isDark, ThemeToggle} = useTheme()
+     const theme = isDark ? Colors.Primary : Colors.Secondry
+      
+      
     const formatDate = (date: string | null) => {
         if (!date) {
             return "-";
@@ -52,7 +57,7 @@ export default function Home() {
             }
 
             const response = await axios.get<InstagramContainer[]>(
-                "http://localhost:3002/instagram/instagramContainerUser",
+                `${url}/instagram/instagramContainerUser`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -119,6 +124,7 @@ export default function Home() {
                 }
             );
 
+            
             console.log(
                 "Create containers:",
                 response.data
@@ -189,19 +195,24 @@ export default function Home() {
     };
     return (
 
-        <div className="mx-auto w-full  text-black px-4 sm:px-6 lg:px-8">
+        <div className={cn(
+            "mx-auto w-full  px-4 sm:px-6 lg:px-8",
+
+            // this theme global
+            `${theme}`
+        )}>
             {/* Header */}
             <header className="mb-8 sm:mb-10">
                 <div className="mb-3 flex items-center gap-3">
                     <span className="h-2 w-2 shrink-0 rounded-full bg-pink-500" />
 
                     <span className="text-sm font-medium ">
-                     Cross Post Platform
+                        Cross Post Platform
                     </span>
                 </div>
 
-                <h1 className="text-2xl font-bold text-black">
-                 Multi Auto Post
+                <h1 className="text-2xl font-bold ">
+                    Multi Auto Post
                 </h1>
 
                 <p className="mt-2 max-w-2xl text-sm">
@@ -264,7 +275,7 @@ export default function Home() {
                             className="
                             neu-inset
             w-full resize-none rounded-xl border border-gray-300
-    px-4 py-3 text-sm text-gray-900
+    px-4 py-3 text-sm 
             outline-none transition
    
   
@@ -290,7 +301,7 @@ export default function Home() {
                             placeholder="Nama audio"
                             className="
             w-full rounded-xl border border-gray-300
-            bg-white px-4 py-3 text-sm text-gray-900
+            px-4 py-3 text-sm 
             outline-none transition
            neu-inset"
                         />
@@ -406,7 +417,7 @@ export default function Home() {
                                         </p>
 
                                         <p className="break-all font-mono text-xs text-gray-600 dark:text-gray-400">
-                                            {post.platfromUserId}
+                                            {post.platformUserId}
                                         </p>
                                     </div>
 
@@ -516,13 +527,13 @@ export default function Home() {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="max-w-[220px] truncate font-mono text-xs ">
-                                                    {post.platfrom}
+                                                    {post.platform}
                                                 </div>
                                             </td>
 
                                             <td className="px-6 py-4">
                                                 <div className="font-mono text-xs ">
-                                                    {post.platfromUserId}
+                                                    {post.platformUserId}
                                                 </div>
                                             </td>
 

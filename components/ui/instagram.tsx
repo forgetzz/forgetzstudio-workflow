@@ -85,30 +85,40 @@ export default function Instagram() {
         apiUrl,
     ]);
 
-    const connect = async () => {
-        try {
-            if (!isSignedIn || !user) {
-                alert("Silakan login terlebih dahulu");
-                return;
-            }
+const connect = async () => {
+  try {
+    if (!isSignedIn || !user) {
+      alert("Silakan login terlebih dahulu");
+      return;
+    }
 
-            if (!apiUrl) {
-                throw new Error(
-                    "NEXT_PUBLIC_BASE_URL belum dikonfigurasi"
-                );
-            }
+    const response = await fetch("/api/instagram");
 
-            window.location.href = `${apiUrl}/instagram`;
-        } catch (error) {
-            console.error("instagram OAuth error:", error);
+    if (!response.ok) {
+      const body = await response.text();
 
-            alert(
-                error instanceof Error
-                    ? error.message
-                    : "Gagal menghubungkan instagram"
-            );
-        }
-    };
+      throw new Error(
+        `Instagram OAuth gagal (${response.status}): ${body}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (!data.url) {
+      throw new Error("Instagram OAuth URL tidak ditemukan");
+    }
+
+    window.location.href = data.url;
+  } catch (error) {
+    console.error("Instagram OAuth error:", error);
+
+    alert(
+      error instanceof Error
+        ? error.message
+        : "Gagal menghubungkan Instagram"
+    );
+  }
+};
     const manage = () => {
         router.push("/instagram");
     };

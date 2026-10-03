@@ -3,8 +3,8 @@
 export type InstagramContainer = {
     userId: string;
     containerId: string;
-    platfrom: string
-    platfromUserId: string;
+    platform: string
+    platformUserId: string;
     status: boolean | null;
     publish: boolean | null;
     scheduledAt: string | null;

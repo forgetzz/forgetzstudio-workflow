@@ -23,6 +23,7 @@ import { useEffect } from "react";
 export default function Home() {
   const user = useUser()
   const router = useRouter()
+  
   useEffect(() => {
     const goToHomePage = () => {
       if (user.user?.emailAddresses) {
@@ -54,6 +55,8 @@ export default function Home() {
       <HowItWorks />
       <CTA />
       <Footer />
+
+      
     </main>
   );
 }

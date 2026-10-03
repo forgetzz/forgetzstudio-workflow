@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
+import { cn } from "@/utils";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -147,112 +148,112 @@ export default function Profile() {
   const [data, setData] = useState<InstagramResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-const STORAGE_KEY = "instagram_profile";
+  const STORAGE_KEY = "instagram_profile";
 
-const getProfile = useCallback(async () => {
-  try {
-    setLoading(true);
-    setError("");
+  const getProfile = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-    // 1. Cek localStorage terlebih dahulu
-    const cached = localStorage.getItem(STORAGE_KEY);
+      // 1. Cek localStorage terlebih dahulu
+      const cached = localStorage.getItem(STORAGE_KEY);
 
-    if (cached) {
-      const parsed: InstagramResponse = JSON.parse(cached);
+      if (cached) {
+        const parsed: InstagramResponse = JSON.parse(cached);
 
-      setData(parsed);
-      return;
-    }
-
-    // 2. Kalau belum ada cache, ambil token
-    const token = await getToken();
-
-    if (!token) {
-      throw new Error("Authentication token tidak ditemukan");
-    }
-
-    // 3. Fetch ke backend
-    const response = await fetch(`${BASE_URL}/instagram/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const text = await response.text();
-
-    if (!response.ok) {
-      let message = `Gagal mengambil profile (${response.status})`;
-
-      try {
-        const errorData = JSON.parse(text);
-
-        if (errorData?.message) {
-          message = Array.isArray(errorData.message)
-            ? errorData.message.join(", ")
-            : errorData.message;
-        }
-      } catch {
-        // Response bukan JSON
+        setData(parsed);
+        return;
       }
 
-      throw new Error(message);
+      // 2. Kalau belum ada cache, ambil token
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error("Authentication token tidak ditemukan");
+      }
+
+      // 3. Fetch ke backend
+      const response = await fetch(`${BASE_URL}/instagram/me`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const text = await response.text();
+
+      if (!response.ok) {
+        let message = `Gagal mengambil profile (${response.status})`;
+
+        try {
+          const errorData = JSON.parse(text);
+
+          if (errorData?.message) {
+            message = Array.isArray(errorData.message)
+              ? errorData.message.join(", ")
+              : errorData.message;
+          }
+        } catch {
+          // Response bukan JSON
+        }
+
+        throw new Error(message);
+      }
+
+      // 4. Parse response
+      let result: InstagramBackendResponse;
+
+      try {
+        result = JSON.parse(text);
+      } catch {
+        throw new Error("Response backend bukan JSON yang valid");
+      }
+
+      // 5. Normalisasi data
+      const normalizedData: InstagramResponse = {
+        profile: result.profile ?? {
+          id: "",
+          username: "",
+        },
+
+        media: Array.isArray(result.media)
+          ? result.media
+          : Array.isArray(result.posts)
+            ? result.posts
+            : [],
+
+        paging: result.paging,
+      };
+
+      // 6. Simpan data terbaru ke localStorage
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(normalizedData)
+      );
+
+      // 7. Simpan ke state
+      setData(normalizedData);
+
+    } catch (err) {
+      console.error("Get Instagram profile error:", err);
+
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Gagal mengambil profile Instagram"
+      );
+    } finally {
+      setLoading(false);
     }
-
-    // 4. Parse response
-    let result: InstagramBackendResponse;
-
-    try {
-      result = JSON.parse(text);
-    } catch {
-      throw new Error("Response backend bukan JSON yang valid");
-    }
-
-    // 5. Normalisasi data
-    const normalizedData: InstagramResponse = {
-      profile: result.profile ?? {
-        id: "",
-        username: "",
-      },
-
-      media: Array.isArray(result.media)
-        ? result.media
-        : Array.isArray(result.posts)
-          ? result.posts
-          : [],
-
-      paging: result.paging,
-    };
-
-    // 6. Simpan data terbaru ke localStorage
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(normalizedData)
-    );
-
-    // 7. Simpan ke state
-    setData(normalizedData);
-
-  } catch (err) {
-    console.error("Get Instagram profile error:", err);
-
-    setError(
-      err instanceof Error
-        ? err.message
-        : "Gagal mengambil profile Instagram"
-    );
-  } finally {
-    setLoading(false);
-  }
-}, [getToken]);
+  }, [getToken]);
 
 
-// Refresh paksa ambil data terbaru dari backend
-const refresh = useCallback(async () => {
-  localStorage.removeItem(STORAGE_KEY);
+  // Refresh paksa ambil data terbaru dari backend
+  const refresh = useCallback(async () => {
+    localStorage.removeItem(STORAGE_KEY);
 
-  await getProfile();
-}, [getProfile]);
+    await getProfile();
+  }, [getProfile]);
 
   useEffect(() => {
     getProfile();
@@ -370,11 +371,11 @@ const refresh = useCallback(async () => {
                   )}
                 </div>
 
-                <button
-                  type="button"
-                  className="neu-button w-full sm:w-auto px-5 py-2 text-xs font-semibold uppercase tracking-widerself-center md:self-auto"
-                >
-                  Edit Profil
+
+                <button className={cn(
+                  "neu-button active:neu-button-active"
+                )} onClick={refresh}>
+                  Refresh
                 </button>
               </div>
 
@@ -524,9 +525,6 @@ const refresh = useCallback(async () => {
           )}
         </section>
 
-  <button onClick={refresh}>
-  Refresh
-</button>
         {/* <section className="neu p-5 sm:p-6 rounded-2xl space-y-4">
           <div>
             <h2 className="text-sm font-bold text-gray-800 dark:text-gray-100">

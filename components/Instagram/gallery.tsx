@@ -6,7 +6,7 @@ import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useContainerInstagram } from "@/store/selectedContainer";
 
-const BASE_URL = "http://localhost:3002";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 interface VideoData {
 
@@ -75,13 +75,7 @@ export default function Gallery() {
         getVideos();
     }, []);
 
-    /*
-     * Backend kamu mengembalikan URL yang bentuknya:
-     *
-     * [https://example.com/video.mp4](https://example.com/video.mp4)
-     *
-     * Kita ubah menjadi URL biasa.
-     */
+
     const cleanVideoUrl = (url: string) => {
         const markdownMatch = url.match(/\((https?:\/\/[^)]+)\)/);
 
